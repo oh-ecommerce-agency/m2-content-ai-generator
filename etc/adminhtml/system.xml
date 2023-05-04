@@ -22,7 +22,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="lang" translate="label comment" type="select"
-                       showInDefault="1" showInWebsite="0" showInStore="0">
+                       showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Language</label>
                     <source_model>OH\ContentAI\Model\Source\Language</source_model>
                 </field>
