@@ -5,6 +5,7 @@
   "type": "magento2-module",
   "require": {
     "magento/framework": "*",
+    "openai-php/client": "^0.4.2",
     "m2-oh/core": "*"
   },
   "license": [
