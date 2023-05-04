@@ -1,0 +1,120 @@
+<?php
+/** @var \OH\ContentAI\Block\Adminhtml\Form\Script $block */
+$entityId = $block->getRequest()->getParam('page_id');
+$getUrl = $block->getUrl('content_ai/content/generate');
+$entityType = $block->getRequest()->getControllerName();
+$alertEnabled = $block->isAlertEnabled();
+$disableAlertUrl = $block->getDisableAlertUrl();
+$storeId = (int) $this->getRequest()->getParam('store', 0);
+?>
+<script>
+    require([
+        'jquery',
+        'uiRegistry',
+        'tinymce',
+        'Magento_Ui/js/modal/alert',
+        'mage/translate'
+    ], function ($, registry, tinymce, uiAlert, $t) {
+        const elemGenerate = $('span[data-btn-content-generate="1"]'),
+            seoIndexTab = 'search_engine_optimisation',
+            contentIndexTab = 'content';
+
+        elemGenerate.click(function () {
+            let contentType = $(this).attr('data-content-type');
+
+            if (contentType.length) {
+                generateContent(contentType);
+            }
+
+            return false;
+        });
+
+        function generateContent(type) {
+            $.ajax({
+                url: '<?= $getUrl ?>',
+                method: 'GET',
+                showLoader: true,
+                data: {
+                    'content_type': type,
+                    'entity_type': '<?= $entityType ?>',
+                    'entity_id': '<?= $entityId ?>',
+					'store_id': '<?= $storeId ?>',
+                },
+                success: function (response) {
+                    response.error.toString() === 'false' ?
+                        update(response.content, type) :
+                        uiAlert({
+                            content: 'Error: ' + response.msg
+                        });
+                }
+            });
+        }
+
+        function update(content, type) {
+            type = type.toString();
+            let alertEnabled = '<?= $alertEnabled ?>';
+
+            switch (type) {
+                case 'description':
+                    updateContent(content, type);
+                    break;
+                case 'meta_title':
+                case 'meta_description':
+                    updateMeta(content, type);
+                    break;
+                default:
+                    uiAlert({
+                        content: $t('Invalid type')
+                    });
+                    return false;
+            }
+
+            if (Boolean(alertEnabled)) {
+                uiAlert({
+                    title: $t('Content added'),
+                    content: $t('Remember tune up the content for your business needs and save the product in order to take effect.') + '<br><br>' +
+                        $t('You can disable this alert from <a href="%1">here.</a>').replace('%1', '<?=$disableAlertUrl?>')
+                });
+            }
+        }
+
+        function updateContent(content, type) {
+            registry.get('index = ' + contentIndexTab, function (tabComponent) {
+                //Open tab first to avoid undefined error
+                tabComponent.opened(true);
+
+                switch (type) {
+                    case 'description':
+                        processDescription(content, type);
+                        break;
+                    default:
+                        return false;
+                }
+            });
+        }
+
+        function processDescription(content, type) {
+            //todo
+        }
+
+        function updateMeta(content, type) {
+            registry.get('index = ' + seoIndexTab, function (tabComponent) {
+                //Open tab first to avoid error
+                tabComponent.opened(true);
+
+                //Scroll to element
+                setTimeout(function () {
+                    document.getElementsByName(type)[0].scrollIntoView({
+                        block: 'center',
+                        behavior: 'instant'
+                    });
+                }, 300);
+
+                //Update value for backend
+                registry.get('inputName = ' + type, function (component) {
+                    component.value(content);
+                });
+            });
+        }
+    });
+</script>

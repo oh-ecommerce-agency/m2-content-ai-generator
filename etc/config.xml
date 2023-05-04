@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <oh_content_ai>
+            <settings>
+                <enable_alert_after_gen_content>1</enable_alert_after_gen_content>
+                <lang>es</lang>
+                <enable_logs>1</enable_logs>
+            </settings>
+            <page>
+                <enabled>1</enabled>
+                <use_title>1</use_title>
+                <use_store_info>1</use_store_info>
+            </page>
+            <product>
+                <enabled>1</enabled>
+                <use_title>1</use_title>
+                <use_store_info>0</use_store_info>
+                <attributes>name|Product name</attributes>
+            </product>
+            <category>
+                <enabled>1</enabled>
+                <use_title>1</use_title>
+                <use_store_info>0</use_store_info>
+                <attributes>name|Name</attributes>
+            </category>
+        </oh_content_ai>
+    </default>
+</config>

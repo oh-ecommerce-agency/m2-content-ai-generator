@@ -1,0 +1,21 @@
+{
+  "name": "oh/module-contentai",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "m2-oh/core": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "OH\\ContentAI\\": ""
+    }
+  }
+}

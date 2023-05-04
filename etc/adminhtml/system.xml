@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+
+    <system>
+        <section id="oh_content_ai" translate="label" sortOrder="280"
+                 showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Content AI</label>
+            <tab>oh_core</tab>
+            <resource>OH_ContentAI::settings</resource>
+            <group id="settings" translate="label"
+                   showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+                <field id="apikey" translate="label" type="obscure" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="enable_alert_after_gen_content" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable alert after generate content</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="lang" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Language</label>
+                    <source_model>OH\ContentAI\Model\Source\Language</source_model>
+                </field>
+                <field id="enable_logs" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable logs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="content" translate="label"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Content</label>
+                <comment>Please fill below information to generate quality content.</comment>
+                <field id="store_info" translate="label" type="label" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Store information</label>
+                    <comment>Make sure you completed the store information section</comment>
+                    <frontend_model>OH\ContentAI\Block\Adminhtml\System\Config\Form\Field\Link</frontend_model>
+                </field>
+                <field id="vertical" translate="label comment" type="select" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Industry</label>
+                    <source_model>Magento\Analytics\Model\Config\Source\Vertical</source_model>
+                </field>
+            </group>
+            <group id="page" translate="label"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Page</label>
+                <comment>Content generation for Pages</comment>
+                <field id="enabled" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_title" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use page title</label>
+                    <comment>Enable use page title for content generation</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="use_store_info" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use store information</label>
+                    <comment>Enable to generate content</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="product" translate="label"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Product</label>
+                <comment>Content generation for Products</comment>
+                <field id="enabled" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_store_info" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use store information</label>
+                    <comment>Enable to generate content</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="attributes" translate="label comment" type="multiselect"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Attributes</label>
+                    <tooltip>Not used for meta title (To short)</tooltip>
+                    <source_model>OH\ContentAI\Model\Source\Product\Attribute</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="category" translate="label"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Category</label>
+                <comment>Content generation for Categories</comment>
+                <field id="enabled" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_store_info" translate="label comment" type="select"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use store information</label>
+                    <comment>Enable to generate content</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="attributes" translate="label comment" type="multiselect"
+                       showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Attributes</label>
+                    <tooltip>Not used for meta title (To short)</tooltip>
+                    <source_model>OH\ContentAI\Model\Source\Category\Attribute</source_model>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

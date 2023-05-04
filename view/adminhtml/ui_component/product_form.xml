@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <settings>
+        <buttons>
+            <button name="content_ai" class="OH\ContentAI\Block\Adminhtml\Form\Buttons\Product\ContentAI"/>
+        </buttons>
+    </settings>
+    <htmlContent name="content_ai" sortOrder="99">
+        <block name="script.content.ai" class="OH\ContentAI\Block\Adminhtml\Form\Script"
+               template="OH_ContentAI::form/product.phtml"/>
+    </htmlContent>
+</form>

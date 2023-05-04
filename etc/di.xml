@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="OH\ContentAI\Logger\Handler\AILogger">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="OH\ContentAI\Logger\AILogger">
+        <arguments>
+            <argument name="name" xsi:type="string">AILogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">OH\ContentAI\Logger\Handler\AILogger</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="OH\ContentAI\Api\Completion\Prompt" type="OH\ContentAI\Model\Completion\BasePrompt"/>
+    <preference for="OH\ContentAI\Api\Completion\Request" type="OH\ContentAI\Model\Completion\BaseRequest"/>
+
+    <type name="OH\ContentAI\Model\Completion\Generator">
+        <arguments>
+            <argument name="map" xsi:type="array">
+                <item name="product" xsi:type="array">
+                    <item name="meta_description" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Product\Request\MetaDescription</item>
+                    </item>
+                    <item name="meta_title" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Product\Request\MetaTitle</item>
+                    </item>
+                    <item name="short_description" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Product\Request\ShortDescription</item>
+                    </item>
+                    <!-- todo description, page builder limitations-->
+                </item>
+                <item name="page" xsi:type="array">
+                    <item name="meta_description" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Page\Request\MetaDescription</item>
+                    </item>
+                    <item name="meta_title" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Page\Request\MetaTitle</item>
+                    </item>
+                    <!-- todo description, page builder limitations-->
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="meta_description" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Category\Request\MetaDescription</item>
+                    </item>
+                    <item name="meta_title" xsi:type="array">
+                        <item name="request" xsi:type="object">OH\ContentAI\Model\Completion\Category\Request\MetaTitle</item>
+                    </item>
+                    <!-- todo description, page builder limitations-->
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Product -->
+    <type name="OH\ContentAI\Model\Completion\Product\Prompt\MetaTitle">
+        <arguments>
+            <argument name="entityType" xsi:type="string">product</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Product\Prompt\MetaDescription">
+        <arguments>
+            <argument name="entityType" xsi:type="string">product</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Product\Prompt\ShortDescription">
+        <arguments>
+            <argument name="entityType" xsi:type="string">product</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Product\Request\MetaDescription">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Product\Prompt\MetaDescription</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">256</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="OH\ContentAI\Model\Completion\Product\Request\MetaTitle">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Product\Prompt\MetaTitle</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">20</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="OH\ContentAI\Model\Completion\Product\Request\ShortDescription">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Product\Prompt\ShortDescription</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">256</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- End Product -->
+
+    <!-- Page -->
+    <type name="OH\ContentAI\Model\Completion\Page\Prompt\MetaTitle">
+        <arguments>
+            <argument name="entityType" xsi:type="string">page</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Page\Prompt\MetaDescription">
+        <arguments>
+            <argument name="entityType" xsi:type="string">page</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Page\Request\MetaDescription">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Page\Prompt\MetaDescription</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">256</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="OH\ContentAI\Model\Completion\Page\Request\MetaTitle">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Page\Prompt\MetaTitle</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">20</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- End Page -->
+
+    <!-- Category -->
+    <type name="OH\ContentAI\Model\Completion\Category\Prompt\MetaTitle">
+        <arguments>
+            <argument name="entityType" xsi:type="string">category</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Category\Prompt\MetaDescription">
+        <arguments>
+            <argument name="entityType" xsi:type="string">category</argument>
+        </arguments>
+    </type>
+    <type name="OH\ContentAI\Model\Completion\Category\Request\MetaDescription">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Category\Prompt\MetaDescription</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">256</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="OH\ContentAI\Model\Completion\Category\Request\MetaTitle">
+        <arguments>
+            <argument name="prompt" xsi:type="object">OH\ContentAI\Model\Completion\Category\Prompt\MetaTitle</argument>
+            <argument name="payload" xsi:type="array">
+                <item name="model" xsi:type="string">text-davinci-003</item>
+                <item name="temperature" xsi:type="number">0</item>
+                <item name="max_tokens" xsi:type="number">20</item>
+                <item name="frequency_penalty" xsi:type="number">0</item>
+                <item name="presence_penalty" xsi:type="number">0</item>
+                <item name="stream" xsi:type="boolean">false</item>
+                <item name="stop" xsi:type="string">\n</item>
+                <item name="n" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- End Category -->
+</config>
